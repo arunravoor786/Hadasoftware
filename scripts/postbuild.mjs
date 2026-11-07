@@ -33,7 +33,7 @@ function seoBlock(meta, url, noindex) {
 function noscriptBlock(meta) {
   const links = pages.map((p) => `<a href="${p.path}">${esc(p.label)}</a>`).join(' · ');
   return (
-    '<noscript><div style="max-width:720px;margin:48px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#111418;line-height:1.6">' +
+    '<noscript><div style="max-width:720px;margin:48px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#F3F5FF;line-height:1.6">' +
     `<p><strong>${SITE_NAME}</strong></p><h1 style="font-size:2rem;line-height:1.15">${esc(meta.h1)}</h1><p>${esc(meta.summary)}</p>` +
     `<p>Write to us: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p><nav>${links}</nav></div></noscript>`
   );

@@ -21,18 +21,17 @@ export const site = {
 } as const;
 
 export interface NavItem {
-  index: string;
   label: string;
   to: string;
 }
 
 export const nav: NavItem[] = [
-  { index: '01', label: 'Services', to: '/services/' },
-  { index: '02', label: 'Products', to: '/products/' },
-  { index: '03', label: 'BizWhats', to: '/bizwhats/' },
-  { index: '04', label: 'ACIP', to: '/acip/' },
-  { index: '05', label: 'Company', to: '/company/' },
-  { index: '06', label: 'Contact', to: '/contact/' },
+  { label: 'Services', to: '/services/' },
+  { label: 'Products', to: '/products/' },
+  { label: 'BizWhats', to: '/bizwhats/' },
+  { label: 'ACIP', to: '/acip/' },
+  { label: 'Company', to: '/company/' },
+  { label: 'Contact', to: '/contact/' },
 ];
 
 export type StatusKind = 'production' | 'active' | 'rolling' | 'development';
@@ -52,16 +51,15 @@ export const products: Record<Product['key'], Product> = {
   bizwhats: {
     key: 'bizwhats',
     name: 'BizWhats',
-    category: 'Customer retention platform',
+    category: 'Customer retention',
     status: 'production',
-    summary:
-      'A WhatsApp-first platform that helps businesses find, win, and keep customers automatically. Built for Indian SMBs, and adaptable to any business that runs on repeat customers.',
+    summary: 'WhatsApp-first customer retention for Indian businesses.',
     features: [
-      'Automated lead discovery, enrichment, and scoring',
-      'Multilingual outreach in five Indian languages',
-      'Reply management and trial-to-paid conversion',
-      'Retention and re-engagement workflows',
-      'Configurable for any repeat-customer sector',
+      'Finds and scores leads',
+      'Reaches them in five languages',
+      'Converts trials to paid',
+      'Keeps customers coming back',
+      'Fits any repeat-customer business',
     ],
     stack: ['Python 3.12', 'FastAPI', 'Supabase', 'WhatsApp Cloud API', 'Anthropic AI', 'Razorpay'],
     to: '/bizwhats/',
@@ -69,16 +67,15 @@ export const products: Record<Product['key'], Product> = {
   acip: {
     key: 'acip',
     name: 'ACIP',
-    category: 'Autonomous Construction Intelligence Platform',
+    category: 'Construction intelligence',
     status: 'development',
-    summary:
-      'AI that prevents construction incidents, not just reports them. The Live Risk Intelligence Engine (LRIE) fuses computer vision, machine learning, and document intelligence into one closed-loop decision engine.',
+    summary: 'AI that prevents construction incidents, from planning to maintenance.',
     features: [
-      'Closed-loop risk detection across all six construction phases',
-      'Accident prevention learned from historical project data',
-      'Subsurface prediction: hidden utilities found before excavation',
-      'Multi-agent LangGraph orchestration with a full audit trail',
-      'Enterprise-ready: OSHA, ISO 45001, role-based escalation',
+      'Live site risk detection',
+      'Compounding-risk scoring',
+      'Subsurface prediction',
+      'Maintenance after handover',
+      'Audit-ready decisions',
     ],
     stack: ['LangGraph', 'LangChain', 'YOLOv8', 'XGBoost', 'Groq LLM', 'FastAPI', 'React + MUI'],
     to: '/acip/',

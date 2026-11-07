@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import { color } from './tokens';
 
-/** The surface a component sits on. Sections provide it; components read it. */
+/** The surface a component sits on: base canvas, lifted band, or deepest band. */
 export type Tone = 'paper' | 'alt' | 'night';
 
 export const ToneContext = createContext<Tone>('paper');
@@ -18,35 +18,22 @@ export interface ToneColors {
   surface: string;
   teal: string;
   orange: string;
+  /** Every surface is dark in this theme; kept for components that tint hovers. */
   night: boolean;
 }
 
 export function toneColors(tone: Tone): ToneColors {
-  if (tone === 'night') {
-    return {
-      bg: color.night,
-      fg: color.onNight,
-      fg2: color.onNight2,
-      fg3: color.onNight3,
-      line: color.nightLine,
-      lineStrong: color.nightLineStrong,
-      surface: color.night2,
-      teal: color.tealBright,
-      orange: color.signal,
-      night: true,
-    };
-  }
   return {
-    bg: tone === 'alt' ? color.paperAlt : color.paper,
+    bg: tone === 'night' ? color.night : tone === 'alt' ? color.paperAlt : color.paper,
     fg: color.ink,
     fg2: color.ink2,
     fg3: color.ink3,
     line: color.line,
     lineStrong: color.lineStrong,
-    surface: color.card,
+    surface: tone === 'night' ? color.night2 : color.card,
     teal: color.teal,
     orange: color.orange,
-    night: false,
+    night: true,
   };
 }
 

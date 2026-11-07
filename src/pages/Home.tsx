@@ -1,16 +1,18 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { motion, useReducedMotion } from 'motion/react';
+import { keyframes } from '@mui/material/styles';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Link as RouterLink } from 'react-router';
 import { ArrowLink } from '../components/ui/ArrowLink';
 import { CountUp } from '../components/ui/CountUp';
 import { CtaSection } from '../components/ui/CtaSection';
+import { FeatureList } from '../components/ui/FeatureList';
 import { Figure } from '../components/ui/Figure';
 import { ArrowRight, MailIcon } from '../components/ui/icons';
 import { Marquee } from '../components/ui/Marquee';
-import { NumberedList } from '../components/ui/NumberedList';
 import { Reveal } from '../components/ui/Reveal';
 import { Section } from '../components/ui/Section';
 import { SectionHead } from '../components/ui/SectionHead';
@@ -19,28 +21,77 @@ import { services } from '../content/services';
 import { site } from '../content/site';
 import { work } from '../content/work';
 import { LiveLog } from '../graphics/LiveLog';
-import { LoopSchematic } from '../graphics/LoopSchematic';
+import { ParticleCore, type ShapeKey } from '../graphics/ParticleCore';
 import { ProductPlate } from '../graphics/ProductPlate';
 import { mailto } from '../lib/mailto';
-import { color, ease, font } from '../theme/tokens';
+import { color, ease, font, gradient } from '../theme/tokens';
 
-const PROJECT_BODY =
-  'Hi Hadasoft team,\n\nWhat we are trying to solve:\n\nWho handles it today, and how:\n\nTimeline:\n\nCompany and website:\n';
+const PROJECT_BODY = 'Hi Hadasoft team,\n\nWhat we want to solve:\n\nWho handles it today:\n\nTimeline:\n';
+
+const shimmer = keyframes`
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+`;
+const drift = keyframes`
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4%, -5%, 0) scale(1.08); }
+  100% { transform: translate3d(-3%, 4%, 0) scale(0.95); }
+`;
+
+const SHAPE_LABEL: Record<ShapeKey, string> = {
+  core: 'The core',
+  mark: 'Hadasoft',
+  link: 'BizWhats × ACIP',
+};
+
+function Aurora() {
+  return (
+    <Box
+      aria-hidden="true"
+      sx={{
+        position: 'absolute',
+        inset: 0,
+        overflow: 'hidden',
+        pointerEvents: 'none',
+        // Fade the whole glow layer out at the top and bottom so it never shows a seam.
+        maskImage: 'linear-gradient(to bottom, transparent 0%, #000 14%, #000 72%, transparent 100%)',
+        '& .blob': { position: 'absolute', borderRadius: '50%', animation: `${drift} 20s ease-in-out infinite alternate` },
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: 'radial-gradient(rgba(180,187,221,0.16) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+          maskImage: 'radial-gradient(ellipse 60% 70% at 72% 45%, #000 10%, transparent 75%)',
+        },
+        '@media (prefers-reduced-motion: reduce)': { '& .blob': { animation: 'none' } },
+      }}
+    >
+      <Box className="blob" sx={{ width: '62vw', height: '62vw', right: '-16vw', top: '-12vw', background: 'radial-gradient(circle, rgba(140,123,255,0.42), transparent 62%)' }} />
+      <Box className="blob" sx={{ width: '48vw', height: '48vw', left: '-20vw', bottom: '-30vw', background: 'radial-gradient(circle, rgba(65,240,210,0.22), transparent 62%)', animationDelay: '-7s' }} />
+      <Box className="blob" sx={{ width: '36vw', height: '36vw', right: '10vw', bottom: '-22vw', background: 'radial-gradient(circle, rgba(255,122,182,0.22), transparent 62%)', animationDelay: '-13s' }} />
+    </Box>
+  );
+}
 
 function Headline() {
   const reduce = useReducedMotion();
   return (
-    <Typography variant="display" sx={{ maxWidth: '11.5em' }}>
+    <Typography variant="display" sx={{ maxWidth: '11em' }}>
       Software built to{' '}
-      <Box component="span" sx={{ position: 'relative', whiteSpace: 'nowrap' }}>
+      <Box
+        component="span"
+        sx={{
+          backgroundImage: gradient.iris,
+          backgroundSize: '200% 100%',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+          animation: `${shimmer} 6s ease-in-out infinite alternate`,
+          '@media (prefers-reduced-motion: reduce)': { animation: 'none' },
+        }}
+      >
         deliver
-        <motion.span
-          aria-hidden="true"
-          initial={reduce ? false : { scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: 0.55, duration: 0.9, ease }}
-          style={{ position: 'absolute', left: 0, right: 0, bottom: '0.04em', height: '0.075em', background: color.tealBright, transformOrigin: '0% 50%' }}
-        />
       </Box>
       , not to{' '}
       <Box component="span" sx={{ position: 'relative', whiteSpace: 'nowrap', color: color.ink3 }}>
@@ -49,8 +100,8 @@ function Headline() {
           aria-hidden="true"
           initial={reduce ? false : { scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ delay: 1.25, duration: 0.55, ease }}
-          style={{ position: 'absolute', left: '-0.04em', right: '-0.04em', top: '56%', height: '0.07em', background: color.signal, transformOrigin: '0% 50%' }}
+          transition={{ delay: 0.9, duration: 0.6, ease }}
+          style={{ position: 'absolute', left: '-0.04em', right: '-0.04em', top: '54%', height: '0.07em', borderRadius: 4, background: color.signal, transformOrigin: '0% 50%' }}
         />
       </Box>
       .
@@ -60,20 +111,25 @@ function Headline() {
 
 function StatStrip() {
   const stats = [
-    { value: <CountUp to={2} />, label: 'Platforms built in-house' },
-    { value: <CountUp to={5} />, label: 'Indian languages, natively' },
-    { value: <CountUp to={11} suffix="+" />, label: 'Cities served by BizWhats' },
-    { value: <span className="tnum">24/7</span>, label: 'Automated pipelines' },
+    { value: <CountUp to={2} />, label: 'Products built' },
+    { value: <CountUp to={5} />, label: 'Indian languages' },
+    { value: <CountUp to={11} suffix="+" />, label: 'Cities served' },
+    { value: <span className="tnum">24/7</span>, label: 'Always-on pipelines' },
   ];
   return (
     <Box
       component="dl"
       sx={{
+        position: 'relative',
         m: 0,
-        mt: { xs: 7, lg: 3 },
+        mt: { xs: 5, lg: 2 },
         display: 'grid',
         gridTemplateColumns: { xs: 'repeat(2, minmax(0, 1fr))', md: 'repeat(4, minmax(0, 1fr))' },
-        borderTop: `1px solid ${color.lineStrong}`,
+        borderRadius: '20px',
+        border: `1px solid ${color.line}`,
+        bgcolor: 'rgba(255,255,255,0.03)',
+        backdropFilter: 'blur(10px)',
+        overflow: 'hidden',
       }}
     >
       {stats.map((s, i) => (
@@ -83,16 +139,16 @@ function StatStrip() {
             display: 'flex',
             flexDirection: 'column-reverse',
             gap: 0.5,
-            py: 2.25,
-            pl: { xs: i % 2 ? 2 : 0, md: i ? 2.5 : 0 },
+            px: { xs: 2.5, md: 3 },
+            py: 2.5,
             borderLeft: { xs: i % 2 ? `1px solid ${color.line}` : 'none', md: i ? `1px solid ${color.line}` : 'none' },
             borderTop: { xs: i > 1 ? `1px solid ${color.line}` : 'none', md: 'none' },
           }}
         >
-          <Box component="dt" sx={{ fontFamily: font.mono, fontSize: '0.7rem', letterSpacing: '0.07em', textTransform: 'uppercase', color: color.ink3 }}>
+          <Box component="dt" sx={{ fontFamily: font.mono, fontSize: '0.7rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: color.ink3 }}>
             {s.label}
           </Box>
-          <Box component="dd" sx={{ m: 0, fontSize: 'clamp(1.6rem, 1.2rem + 1vw, 2.2rem)', fontWeight: 560, fontStretch: '108%', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+          <Box component="dd" sx={{ m: 0, fontSize: 'clamp(1.7rem, 1.2rem + 1.2vw, 2.4rem)', fontWeight: 600, fontStretch: '110%', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
             {s.value}
           </Box>
         </Box>
@@ -102,51 +158,85 @@ function StatStrip() {
 }
 
 function Hero() {
+  const [shape, setShape] = useState<ShapeKey>('core');
   return (
-    <Section pad="none" sx={{ pt: { xs: '32px', md: '40px' }, pb: { xs: '56px', md: '48px' } }}>
+    <Section pad="none" sx={{ pt: { xs: '20px', md: '16px' }, pb: { xs: '56px', md: '44px' }, overflow: 'hidden' }}>
+      <Aurora />
       <Box
         sx={{
-          minHeight: { lg: 'calc(100svh - 68px - 190px)' },
+          position: 'relative',
+          minHeight: { lg: 'calc(100svh - 68px - 140px)' },
           display: 'grid',
-          gridTemplateColumns: { xs: '1fr', lg: 'minmax(0, 5.3fr) minmax(0, 6.7fr)' },
+          gridTemplateColumns: { xs: '1fr', lg: 'minmax(0, 5.4fr) minmax(0, 6.6fr)' },
           alignItems: 'center',
-          gap: { xs: 6, lg: 6 },
+          gap: { xs: 1, lg: 2 },
         }}
       >
-        <Box>
+        <Box sx={{ position: 'relative', zIndex: 1, pt: { xs: 3, lg: 0 } }}>
           <Reveal>
-            <Typography variant="mono" component="p" sx={{ color: color.ink3, mb: 3 }}>
-              Product engineering · Magarpatta, Pune
-            </Typography>
+            <Box
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 1.25,
+                px: 1.75,
+                py: 0.75,
+                mb: 3.5,
+                borderRadius: '999px',
+                border: `1px solid ${color.lineStrong}`,
+                bgcolor: 'rgba(255,255,255,0.04)',
+                fontFamily: font.mono,
+                fontSize: '0.72rem',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: color.ink2,
+              }}
+            >
+              <Box component="span" sx={{ width: 7, height: 7, borderRadius: '50%', background: gradient.iris, boxShadow: '0 0 10px rgba(140,123,255,0.9)' }} />
+              Product engineering · Pune
+            </Box>
           </Reveal>
           <Headline />
           <Reveal delay={0.1}>
-            <Typography variant="lead" sx={{ mt: 3, color: color.ink2, maxWidth: '44ch' }}>
-              We design, build and run production-grade software: our own platforms, BizWhats and ACIP, and custom systems for
-              clients who need software that keeps working long after launch.
+            <Typography variant="lead" sx={{ mt: 3, color: color.ink2, maxWidth: '36ch' }}>
+              Products, AI systems and automation that keep working after launch.
             </Typography>
           </Reveal>
           <Reveal delay={0.18}>
             <Stack direction={{ xs: 'column', sm: 'row' }} sx={{ mt: 4.5, gap: 2, alignItems: { xs: 'stretch', sm: 'center' } }}>
-              <Button
-                variant="contained"
-                size="large"
-                href={mailto({ subject: 'New project enquiry', body: PROJECT_BODY })}
-                startIcon={<MailIcon size={18} />}
-              >
+              <Button variant="contained" size="large" href={mailto({ subject: 'New project enquiry', body: PROJECT_BODY })} startIcon={<MailIcon size={18} />}>
                 Start a project
               </Button>
               <Button component={RouterLink} to="/products/" variant="outlined" size="large" endIcon={<ArrowRight size={18} />}>
-                Explore our products
+                Our products
               </Button>
             </Stack>
           </Reveal>
         </Box>
-        <Reveal delay={0.1} sx={{ minWidth: 0 }}>
-          <Figure n="1" caption="Two loops, one principle" note="Live diagram · illustrative" sx={{ maxWidth: 640, mx: 'auto' }}>
-            <LoopSchematic />
-          </Figure>
-        </Reveal>
+
+        <Box sx={{ position: 'relative', height: { xs: 380, sm: 480, lg: 'min(660px, calc(100svh - 200px))' }, mx: { xs: '-20px', sm: 0 } }}>
+          <ParticleCore onShapeChange={setShape} sx={{ height: '100%' }} />
+          <Box
+            aria-live="off"
+            sx={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: { xs: 4, lg: 16 },
+              display: 'flex',
+              justifyContent: 'center',
+              pointerEvents: 'none',
+            }}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={shape} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.35, ease }}>
+                <Box sx={{ fontFamily: font.mono, fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: color.ink2 }}>
+                  {SHAPE_LABEL[shape]}
+                </Box>
+              </motion.div>
+            </AnimatePresence>
+          </Box>
+        </Box>
       </Box>
       <StatStrip />
     </Section>
@@ -159,25 +249,15 @@ export default function Home() {
       <Hero />
 
       <Section id="services">
-        <SectionHead
-          index="01"
-          label="Services"
-          title="We build for clients the way we build for ourselves."
-          lead="BizWhats and ACIP are where we earned our skills. Bring us a real problem and we will bring the same engineering to it."
-        />
-        <NumberedList items={services} />
-        <Box sx={{ mt: { xs: 6, md: 8 } }}>
-          <ArrowLink to="/services/">How we work with clients</ArrowLink>
+        <SectionHead label="Services" title="What we build." lead="For clients, the way we build for ourselves." />
+        <FeatureList items={services} />
+        <Box sx={{ mt: { xs: 5, md: 6 } }}>
+          <ArrowLink to="/services/">How we work</ArrowLink>
         </Box>
       </Section>
 
       <Section tone="alt" id="products">
-        <SectionHead
-          index="02"
-          label="Our products"
-          title="One platform in production, one redefining its industry."
-          lead="Two platforms we designed, built and run ourselves. BizWhats is serving businesses today; ACIP, our flagship, is in active development, pioneering AI-driven incident prevention for construction."
-        />
+        <SectionHead label="Products" title="Our products." lead="Built, shipped and run in-house." />
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: 'repeat(2, minmax(0, 1fr))' }, gap: { xs: 3, md: 4 } }}>
           <Reveal>
             <ProductPlate productKey="bizwhats" />
@@ -189,12 +269,7 @@ export default function Home() {
       </Section>
 
       <Section id="work">
-        <SectionHead
-          index="03"
-          label="Client work"
-          title="Delivered for clients."
-          lead="Our first client engagement, live today. More case studies will join it as projects ship."
-        />
+        <SectionHead label="Client work" title="Delivered." lead="Live and in use." />
         <Box sx={{ display: 'grid', gap: 3 }}>
           {work.map((item, i) => (
             <Reveal key={item.domain}>
@@ -205,7 +280,7 @@ export default function Home() {
       </Section>
 
       <Section tone="alt" labelledBy="sectors-title">
-        <SectionHead index="04" id="sectors-title" label="Who we build for" title="Made for the businesses that keep India running." />
+        <SectionHead id="sectors-title" label="Who we build for" title="For the businesses that keep India running." />
         <Box sx={{ mx: { xs: '-20px', sm: '-32px', md: '-48px' } }}>
           <Marquee
             items={[
@@ -216,81 +291,51 @@ export default function Home() {
               'Boutiques & Retail',
               'Kirana Stores',
               'Restaurants',
-              'Construction & Contracting',
+              'Construction',
+              'Asset owners',
               'Insurers',
-              'Service businesses',
             ]}
           />
         </Box>
       </Section>
 
       <Section>
-        <SectionHead
-          index="05"
-          label="Why Hadasoft"
-          title="Engineering discipline you can build a business on."
-          lead="We approach every product the way enterprise teams expect: clear contracts, full observability, and systems designed to keep running long after launch."
-        />
-        <NumberedList
+        <SectionHead label="How we build" title="Discipline you can build on." />
+        <FeatureList
           items={[
-            {
-              title: 'Storage-mediated architecture',
-              body: 'Our systems communicate through a database, not fragile in-memory chains. Every component is independently testable, replayable, and observable.',
-            },
-            {
-              title: 'Multilingual by design',
-              body: 'Language is built into the data model, not bolted on as translation. BizWhats speaks English, Hindi, Marathi, Tamil, and Telugu natively.',
-            },
-            {
-              title: 'Automated from day one',
-              body: 'The operational pipeline is built before the first customer. We refuse to scale manual processes: the automation is the product.',
-            },
-            {
-              title: 'Enterprise-grade hygiene',
-              body: 'Credential rotation, audit trails, idempotency, kill switches. We build with the safeguards large organisations require.',
-            },
-            {
-              title: 'Real problems only',
-              body: "Every product solves a problem someone is already paying to handle manually. We're conservative about what's worth automating.",
-            },
-            {
-              title: 'Built to scale',
-              body: 'From a single salon to a multi-site enterprise, our platforms are architected to grow without rebuilding the foundation.',
-            },
+            { title: 'Storage-mediated', body: 'Components talk through the database. Testable and replayable.' },
+            { title: 'Multilingual by design', body: 'Language lives in the data model.' },
+            { title: 'Automated from day one', body: 'The automation is the product.' },
+            { title: 'Enterprise hygiene', body: 'Audit trails, credential rotation, kill switches.' },
+            { title: 'Real problems only', body: 'We automate what someone already pays to do.' },
+            { title: 'Built to scale', body: 'One shop to many sites, same foundation.' },
           ]}
         />
       </Section>
 
       <Section tone="night">
-        <SectionHead
-          index="06"
-          label="Inside the loop"
-          title={<>What “automated from day one” looks like.</>}
-          lead="Our products run as small engines that hand work to each other through the database, never through fragile in-memory chains. Every step is written down, so it can be tested, replayed and audited."
-        />
-        <Figure caption="Event stream across BizWhats and LRIE" note="Illustrative · event names mirror real engine stages">
-          <Box sx={{ p: { xs: 1.5, md: 2.5 }, border: `1px solid ${color.nightLine}`, bgcolor: color.night2 }}>
+        <SectionHead label="Inside the loop" title="Automated, end to end." lead="Small engines, one database, every step logged." />
+        <Figure caption="Live event stream" note="Illustrative">
+          <Box sx={{ p: { xs: 1.5, md: 2.5 }, borderRadius: '20px', border: `1px solid ${color.line}`, bgcolor: color.night2, boxShadow: '0 40px 100px -60px rgba(140,123,255,0.7)' }}>
             <LiveLog />
           </Box>
         </Figure>
       </Section>
 
       <CtaSection
-        index="07"
         label="Start a project"
-        title="Have a project in mind?"
-        lead={
-          <>
-            Whether you run a single shop, a construction enterprise or a product that needs an engineering team, tell us the
-            problem. We reply within one working day. For BizWhats, write to{' '}
-            <Box component="a" href={mailto({ to: site.supportEmail })} sx={{ color: 'inherit' }}>
-              {site.supportEmail}
-            </Box>
-            .
-          </>
-        }
+        title="Have a project?"
+        lead="Tell us the problem. We reply within one working day."
         subject="New project enquiry"
         body={PROJECT_BODY}
+        extra={
+          <Typography variant="body2" sx={{ color: color.ink2 }}>
+            BizWhats?{' '}
+            <Box component="a" href={mailto({ to: site.supportEmail })} sx={{ color: color.teal }}>
+              {site.supportEmail}
+            </Box>
+          </Typography>
+        }
       />
     </>
   );

@@ -143,10 +143,12 @@ export function ChatThread() {
       role="img"
       aria-label="Example BizWhats conversations: a business reminds a customer about their next visit in Marathi, Hindi, Tamil, Telugu and English, and the booking is confirmed automatically."
       sx={{
-        border: `1px solid ${c.lineStrong}`,
+        borderRadius: '22px',
+        overflow: 'hidden',
+        border: '1px solid rgba(65,240,210,0.32)',
         bgcolor: color.card,
         color: color.ink,
-        boxShadow: '0 40px 80px -48px rgba(17,20,24,0.45)',
+        boxShadow: '0 50px 110px -50px rgba(65,240,210,0.55)',
         maxWidth: 520,
         mx: { xs: 0, lg: 'auto' },
       }}
@@ -244,8 +246,8 @@ export function ChatThread() {
                     py: 1.25,
                     fontSize: '0.98rem',
                     lineHeight: 1.55,
-                    bgcolor: m.kind === 'out' ? 'rgba(31,184,159,0.16)' : color.card,
-                    border: `1px solid ${m.kind === 'out' ? 'rgba(11,122,108,0.28)' : color.line}`,
+                    bgcolor: m.kind === 'out' ? 'rgba(65,240,210,0.13)' : 'rgba(255,255,255,0.05)',
+                    border: `1px solid ${m.kind === 'out' ? 'rgba(65,240,210,0.38)' : color.line}`,
                     borderRadius: m.kind === 'out' ? '14px 14px 3px 14px' : '14px 14px 14px 3px',
                   }}
                 >

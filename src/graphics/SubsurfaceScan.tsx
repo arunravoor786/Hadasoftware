@@ -42,8 +42,8 @@ export function SubsurfaceScan() {
         alignItems: 'center',
       }}
     >
-      <Figure n="5" caption="Excavation plan with the 1962 mechanical layer" note="Illustrative plan">
-        <Box key={run} sx={{ border: `1px solid ${c.line}`, bgcolor: c.surface }}>
+      <Figure caption="Excavation plan with the 1962 mechanical layer" note="Illustrative plan">
+        <Box key={run} sx={{ borderRadius: '20px', overflow: 'hidden', border: `1px solid ${c.lineStrong}`, bgcolor: c.surface }}>
           <svg
             viewBox="0 0 720 460"
             width="100%"
@@ -199,7 +199,7 @@ export function SubsurfaceScan() {
           animate={play ? { opacity: 1, y: 0 } : undefined}
           transition={{ delay: d(T.alert), duration: dur(0.6), ease }}
         >
-          <Box sx={{ borderLeft: `3px solid ${color.signal}`, bgcolor: c.surface, p: { xs: 2.5, md: 3 }, border: `1px solid ${c.line}` }}>
+          <Box sx={{ borderRadius: '18px', bgcolor: c.surface, p: { xs: 2.5, md: 3 }, border: '1px solid rgba(255,122,89,0.4)', boxShadow: '0 30px 80px -40px rgba(255,122,89,0.55)' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: color.orange, fontFamily: font.mono, fontSize: '0.72rem', letterSpacing: '0.08em' }}>
               <AlertIcon size={16} /> CRITICAL
             </Box>
@@ -216,8 +216,7 @@ export function SubsurfaceScan() {
           </Box>
         </motion.div>
         <Typography variant="body2" sx={{ mt: 3, color: c.fg2 }}>
-          A 1960s office building needs new basement foundations. ACIP retrieves the original 1962 mechanical drawings stored
-          at project setup and finds a water line capped in the 1990s but never removed, so it appears on no current survey.
+          A 1960s building needs new foundations. Its 1962 drawings show a water line no current survey has.
         </Typography>
         {!reduce && (
           <Button

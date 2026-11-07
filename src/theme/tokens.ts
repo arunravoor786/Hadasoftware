@@ -1,36 +1,51 @@
 /**
- * Design tokens. Every colour here has been checked for WCAG AA contrast on the
- * surface it is meant for (text colours on paper, "bright" accents on night).
+ * Design tokens: "Iridescent Midnight".
+ * A deep indigo canvas (evolved from the original brand navy) with luminous
+ * accents. Token names are semantic roles: `paper` is the default page surface,
+ * `ink` the primary text. Every text colour passes WCAG AA on the surfaces it sits on.
  */
 export const color = {
   // Surfaces
-  paper: '#F3F1EA',
-  paperAlt: '#EAE6DB',
-  card: '#FAF9F5',
-  night: '#0D1013',
-  night2: '#14191E',
-  night3: '#1B2127',
+  paper: '#070A1D', // base canvas
+  paperAlt: '#0B0F2A', // lifted band
+  card: '#11163A', // raised surface
+  night: '#04050F', // deepest band, footer
+  night2: '#0E1233',
+  night3: '#151B45',
 
-  // Ink (on paper)
-  ink: '#111418',
-  ink2: '#454A52',
-  ink3: '#62676F',
-  line: 'rgba(17, 20, 24, 0.14)',
-  lineStrong: 'rgba(17, 20, 24, 0.34)',
+  // Text and lines
+  ink: '#F3F5FF',
+  ink2: '#B4BBDD',
+  ink3: '#8089B3',
+  line: 'rgba(180, 187, 221, 0.13)',
+  lineStrong: 'rgba(180, 187, 221, 0.28)',
+  onNight: '#F3F5FF',
+  onNight2: '#B4BBDD',
+  onNight3: '#8089B3',
+  nightLine: 'rgba(180, 187, 221, 0.13)',
+  nightLineStrong: 'rgba(180, 187, 221, 0.28)',
 
-  // Ink (on night)
-  onNight: '#EDEBE4',
-  onNight2: '#A3A7AD',
-  onNight3: '#8A8F96',
-  nightLine: 'rgba(237, 235, 228, 0.14)',
-  nightLineStrong: 'rgba(237, 235, 228, 0.32)',
+  // Meaningful accents: aqua = retention (BizWhats), coral = risk (ACIP), violet = Hadasoft
+  teal: '#41F0D2',
+  tealBright: '#41F0D2',
+  orange: '#FF8A5B',
+  signal: '#FF7A59',
+  critical: '#FF4D6D',
+  violet: '#8C7BFF',
+  sky: '#5CC8FF',
+  pink: '#FF7AB6',
+  amber: '#FFB547',
+  glass: 'rgba(255, 255, 255, 0.045)',
+  glassStrong: 'rgba(255, 255, 255, 0.08)',
+} as const;
 
-  // Meaningful accents: teal = retention (BizWhats), orange = risk (ACIP)
-  teal: '#0B7A6C', // text-safe on paper
-  tealBright: '#1FB89F', // graphics on paper, text on night
-  orange: '#B8460B', // text-safe on paper
-  signal: '#FF6A1A', // graphics on paper, text on night
-  critical: '#FF4F3A', // CRITICAL states on night
+export const gradient = {
+  /** The signature: aqua → violet → pink → amber. Use sparingly. */
+  iris: 'linear-gradient(100deg, #5CE1E6 0%, #8C7BFF 40%, #FF7AB6 72%, #FFB547 100%)',
+  rule: 'linear-gradient(90deg, rgba(92,225,230,0.6), rgba(140,123,255,0.4) 35%, rgba(180,187,221,0.12) 70%, rgba(180,187,221,0.08))',
+  aqua: 'linear-gradient(135deg, rgba(65,240,210,0.55), rgba(92,200,255,0.25) 40%, rgba(180,187,221,0.08) 70%)',
+  coral: 'linear-gradient(135deg, rgba(255,122,89,0.6), rgba(255,122,182,0.25) 40%, rgba(180,187,221,0.08) 70%)',
+  violet: 'linear-gradient(135deg, rgba(140,123,255,0.6), rgba(92,225,230,0.22) 45%, rgba(180,187,221,0.08) 72%)',
 } as const;
 
 export const font = {

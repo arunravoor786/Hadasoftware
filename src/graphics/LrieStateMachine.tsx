@@ -8,41 +8,13 @@ import { color, font } from '../theme/tokens';
 import { RiskGauge } from './RiskGauge';
 
 const STATES = [
-  {
-    id: 'DATA_RECEIVED',
-    title: 'Observe',
-    body: 'Ingests site camera images, inspection photos, PDF reports, CSV logs, IoT streams, and manual entries. Each input is typed and routed to the right AI module.',
-  },
-  {
-    id: 'PREPROCESSING',
-    title: 'Validate',
-    body: 'Pydantic v2 schema validation, image resolution checks, document completeness verification, and duplicate detection before anything enters the pipeline.',
-  },
-  {
-    id: 'MODEL_EXEC',
-    title: 'Execute',
-    body: 'YOLOv8 for vision, XGBoost for risk, an LLM for documents: the right model runs for the input type.',
-  },
-  {
-    id: 'CONFIDENCE',
-    title: 'Score',
-    body: 'A calibrated enterprise confidence score (0.0–1.0), not a raw model output, weighing model confidence, historical accuracy, and context such as time, phase and weather.',
-  },
-  {
-    id: 'DECISION',
-    title: 'Decide',
-    body: 'Maps the score to a risk class: LOW (log only), MEDIUM (dashboard flag), HIGH (notify the safety officer and retrieve the protocol), CRITICAL (executive escalation and possible work stoppage).',
-  },
-  {
-    id: 'ACTION',
-    title: 'Escalate & mitigate',
-    body: 'Role-based escalation routes to the right person; RAG retrieves the specific applicable protocol via the Groq LLM for an actionable mitigation, not a generic rule.',
-  },
-  {
-    id: 'LOGGED',
-    title: 'Close',
-    body: 'The full reasoning chain, from detection to resolution, is preserved in the PostgreSQL audit log with timestamps, responsible parties, and outcome.',
-  },
+  { id: 'DATA_RECEIVED', title: 'Observe', body: 'Cameras, photos, PDFs, logs and IoT, typed and routed.' },
+  { id: 'PREPROCESSING', title: 'Validate', body: 'Schema, quality and duplicate checks.' },
+  { id: 'MODEL_EXEC', title: 'Execute', body: 'YOLOv8 for vision, XGBoost for risk, an LLM for documents.' },
+  { id: 'CONFIDENCE', title: 'Score', body: 'A calibrated 0–1 score, weighted by history and context.' },
+  { id: 'DECISION', title: 'Decide', body: 'Low logs. Medium flags. High notifies. Critical escalates.' },
+  { id: 'ACTION', title: 'Escalate', body: 'The right person, with the exact protocol retrieved.' },
+  { id: 'LOGGED', title: 'Close', body: 'The full reasoning chain, kept for audit.' },
 ];
 
 /** The seven LRIE states, advanced by scroll, beside a sticky confidence gauge. */
@@ -132,8 +104,8 @@ export function LrieStateMachine() {
       </Box>
 
       <Box sx={{ position: { lg: 'sticky' }, top: { lg: 112 } }}>
-        <Figure n="4" caption="Confidence becomes a decision" note="Illustrative values">
-          <Box sx={{ p: { xs: 2.5, md: 3.5 }, border: `1px solid ${c.line}`, bgcolor: c.surface }}>
+        <Figure caption="Confidence becomes a decision" note="Illustrative values">
+          <Box sx={{ p: { xs: 2.5, md: 3.5 }, borderRadius: '20px', border: '1px solid rgba(255,122,89,0.3)', bgcolor: c.surface, boxShadow: '0 40px 90px -50px rgba(255,122,89,0.6)' }}>
             <RiskGauge />
           </Box>
         </Figure>

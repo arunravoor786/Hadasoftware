@@ -1,21 +1,21 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { CtaSection } from '../components/ui/CtaSection';
-import { NumberedList } from '../components/ui/NumberedList';
+import { FeatureList } from '../components/ui/FeatureList';
+import { GlowCard, type GlowAccent } from '../components/ui/GlowCard';
 import { PageHead } from '../components/ui/PageHead';
 import { Reveal } from '../components/ui/Reveal';
 import { Section } from '../components/ui/Section';
 import { SectionHead } from '../components/ui/SectionHead';
-import { color, font } from '../theme/tokens';
+import { color, font, gradient } from '../theme/tokens';
 
 interface Person {
   initials: string;
   name: string;
   role: string;
-  focus: string;
-  note: string;
   bio: string;
   tags: string[];
+  accent: GlowAccent;
 }
 
 const PEOPLE: Person[] = [
@@ -23,79 +23,69 @@ const PEOPLE: Person[] = [
     initials: 'SR',
     name: 'Swathi R',
     role: 'Managing Director',
-    focus: 'Human Resources & Strategic Partnerships',
-    note: 'Leads company operations',
-    bio: "As Managing Director, Swathi leads Hadasoft's people strategy and the partnerships that open new markets. She has built the operating culture that lets a focused team move quickly without compromising on trust, and she owns the relationships that turn Hadasoft's products into lasting business.",
-    tags: ['Human Resources', 'Strategic Partnerships', 'Operations', 'Culture'],
+    bio: 'Leads people, operations and partnerships.',
+    tags: ['People', 'Partnerships', 'Operations'],
+    accent: 'aqua',
   },
   {
     initials: 'AR',
     name: 'ArunKumar RM',
-    role: 'Founder & Chief Technology Officer',
-    focus: 'Product Architecture & AI Engineering',
-    note: 'Architect of both products',
-    bio: 'ArunKumar is the founder and the technical force behind every Hadasoft product. He designed both BizWhats and ACIP from first principles: the data models, the pipelines, the AI layers, and the deployment. His range across the full stack and AI engineering is what lets a focused team ship platforms that compete with far larger ones. He credits his brother, Kalyan Pemmasani, for shaping his approach to leadership, and his father, Muthaiyan R, for the hard work and straightforwardness he brings to every build.',
-    tags: ['AI Engineering', 'Full-Stack Architecture', 'Product', 'Systems Design'],
+    role: 'Founder & CTO',
+    bio: "Architect of BizWhats and ACIP, from data model to deployment. Shaped by his brother Kalyan Pemmasani's leadership and his father Muthaiyan R's work ethic.",
+    tags: ['AI engineering', 'Architecture', 'Product'],
+    accent: 'violet',
   },
   {
     initials: 'DT',
     name: 'Dinesh Thummalapenta',
     role: 'Business Development & Automation Lead',
-    focus: 'Growth & Pipeline Engineering',
-    note: 'Built the lead engine',
-    bio: "Dinesh turns Hadasoft's products into pipelines of real opportunity. With an instinct for both sales and engineering, he builds the automation that keeps new leads flowing without manual overhead, and identifies the partnerships and markets where Hadasoft's products win. He is always developing the next automation for an ongoing project.",
-    tags: ['Business Development', 'Lead Generation', 'Sales Automation', 'Partnerships'],
+    bio: 'Builds the automation that keeps leads flowing, and finds the markets where our products win.',
+    tags: ['Growth', 'Automation', 'Partnerships'],
+    accent: 'coral',
   },
 ];
 
 function PersonCard({ p }: { p: Person }) {
   return (
-    <Box component="article" aria-labelledby={`person-${p.initials}`} sx={{ border: `1px solid ${color.line}`, bgcolor: color.card, height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ display: 'flex', gap: 2.5, alignItems: 'center', p: 3, borderBottom: `1px solid ${color.line}` }}>
+    <GlowCard accent={p.accent} bg={color.card} radius={22} component="article" labelledBy={`person-${p.initials}`}>
+      <Box sx={{ p: { xs: 3, md: 3.5 }, display: 'flex', flexDirection: 'column', gap: 2.5, height: '100%' }}>
         <Box
           aria-hidden="true"
           sx={{
-            flexShrink: 0,
             width: 64,
             height: 64,
+            borderRadius: '18px',
             display: 'grid',
             placeItems: 'center',
-            bgcolor: color.ink,
+            background: gradient.iris,
             color: color.paper,
-            fontWeight: 600,
+            fontWeight: 700,
             fontStretch: '115%',
             fontSize: '1.3rem',
             letterSpacing: '-0.02em',
+            boxShadow: '0 16px 40px -16px rgba(140,123,255,0.8)',
           }}
         >
           {p.initials}
         </Box>
-        <Box sx={{ minWidth: 0 }}>
+        <Box>
           <Typography id={`person-${p.initials}`} variant="h4" component="h3">
             {p.name}
           </Typography>
-          <Typography sx={{ color: color.ink2, fontSize: '0.95rem', lineHeight: 1.35, mt: 0.25 }}>{p.role}</Typography>
+          <Typography sx={{ color: color.ink2, fontSize: '0.95rem', mt: 0.5 }}>{p.role}</Typography>
         </Box>
-      </Box>
-      <Box sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <Box sx={{ fontFamily: font.mono, fontSize: '0.7rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: color.ink3 }}>
-          {p.focus}
-          <Box component="span" sx={{ display: 'block', color: color.teal, mt: 0.75 }}>
-            — {p.note}
-          </Box>
-        </Box>
-        <Typography variant="body2" sx={{ color: color.ink2 }}>
+        <Typography variant="body2" sx={{ color: color.ink2, flex: 1 }}>
           {p.bio}
         </Typography>
-        <Box sx={{ mt: 'auto', display: 'flex', flexWrap: 'wrap', gap: 1, pt: 1 }}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
           {p.tags.map((t) => (
-            <Box key={t} component="span" sx={{ fontFamily: font.mono, fontSize: '0.66rem', letterSpacing: '0.05em', border: `1px solid ${color.line}`, px: 1, py: 0.4, color: color.ink2 }}>
+            <Box key={t} component="span" sx={{ fontFamily: font.mono, fontSize: '0.66rem', letterSpacing: '0.05em', textTransform: 'uppercase', borderRadius: '999px', border: `1px solid ${color.lineStrong}`, px: 1.25, py: 0.5, color: color.ink2 }}>
               {t}
             </Box>
           ))}
         </Box>
       </Box>
-    </Box>
+    </GlowCard>
   );
 }
 
@@ -104,39 +94,17 @@ export default function Company() {
     <>
       <PageHead
         crumbs={[{ label: 'Home', to: '/' }, { label: 'Company' }]}
-        eyebrow="About Hadasoft"
-        title="A software company building platforms that businesses depend on."
-        lead="Hadasoftware Private Limited engineers production-grade software for two of the hardest problems any business faces, keeping customers and seeing risk before it lands, and builds custom systems for clients who need the same reliability. We pair deep technical capability with the operational discipline to run real products at scale."
+        eyebrow="Company"
+        title="A small team that ships."
+        lead="Hadasoftware Private Limited. Product engineering from Magarpatta, Pune."
       />
 
       <Section tone="alt">
-        <SectionHead index="01" label="Who we are" title="Built to deliver, not to demo.">
-          <Box sx={{ mt: { xs: 4, md: 5 }, display: 'grid', gap: 3, maxWidth: '62ch' }}>
-            <Reveal>
-              <Typography variant="lead" sx={{ color: color.ink2 }}>
-                Hadasoft was founded on a simple conviction: most business software over-promises and under-delivers. Companies
-                are sold dashboards they never use and automations that quietly break. We build the opposite: systems that earn
-                their place by doing real work, every day, reliably.
-              </Typography>
-            </Reveal>
-            <Reveal delay={0.06}>
-              <Typography variant="lead" sx={{ color: color.ink2 }}>
-                Our products reflect that. BizWhats keeps customers coming back for small and medium businesses. ACIP catches
-                risk for construction enterprises before it becomes loss. Our client work, starting with the website we delivered
-                for Dakshin Projects, holds to the same standard: software that works in the real world, under real constraints.
-              </Typography>
-            </Reveal>
-          </Box>
-        </SectionHead>
+        <SectionHead label="Who we are" title="Built to deliver, not to demo." lead="Most business software over-promises. We build systems that do real work, every day." />
       </Section>
 
       <Section id="leadership">
-        <SectionHead
-          index="02"
-          label="Leadership"
-          title="The people behind Hadasoft."
-          lead="A leadership team that spans strategy, engineering, and growth."
-        />
+        <SectionHead label="Leadership" title="The people behind Hadasoft." />
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, minmax(0, 1fr))', lg: 'repeat(3, minmax(0, 1fr))' }, gap: 3 }}>
           {PEOPLE.map((p, i) => (
             <Reveal key={p.initials} delay={i * 0.07} sx={{ height: '100%', '& > div': { height: '100%' } }}>
@@ -147,43 +115,20 @@ export default function Company() {
       </Section>
 
       <Section tone="night">
-        <SectionHead index="03" label="How we work" title="The principles behind every build." />
-        <NumberedList
+        <SectionHead label="Principles" title="How we work." />
+        <FeatureList
           items={[
-            {
-              title: 'Solve a real problem',
-              body: "We only automate work that someone is already paying to do manually. If no one does it today, it's a feature, not a product.",
-            },
-            {
-              title: 'Storage-mediated systems',
-              body: 'Every component communicates through a database: testable, replayable, observable. This is how software survives past launch.',
-            },
-            {
-              title: 'Prove every layer',
-              body: 'We smoke-test and commit a working state before building the next layer on top. Slow at first, then suddenly fast.',
-            },
-            {
-              title: 'De-scope without apology',
-              body: 'A focused product that works beats a sketch of everything. We cut to ship the parts that earn trust first.',
-            },
-            {
-              title: 'Multilingual at the schema',
-              body: "We build for India's languages from the database up, not as an afterthought translation layer.",
-            },
-            {
-              title: 'Security is non-negotiable',
-              body: 'Credential rotation, audit trails, and safety guardrails are built in from the first commit, not added later.',
-            },
+            { title: 'Solve real problems', body: "If no one does it today, it's a feature, not a product." },
+            { title: 'Storage-mediated systems', body: 'Testable, replayable, observable.' },
+            { title: 'Prove every layer', body: 'Slow at first, then suddenly fast.' },
+            { title: 'De-scope without apology', body: 'Ship the parts that earn trust first.' },
+            { title: 'Multilingual at the schema', body: "India's languages, from the database up." },
+            { title: 'Security first', body: 'Guardrails from the first commit.' },
           ]}
         />
       </Section>
 
-      <CtaSection
-        index="04"
-        title="Want to work with us or join the team?"
-        lead="We're always glad to hear from businesses, partners, and engineers who like the way we build."
-        subject="Hello from hadasoft.in"
-      />
+      <CtaSection label="Work with us" title="Clients, partners, engineers." lead="All welcome. Start with an email." subject="Hello from hadasoft.in" />
     </>
   );
 }

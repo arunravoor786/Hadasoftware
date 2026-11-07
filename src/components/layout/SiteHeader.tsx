@@ -8,7 +8,7 @@ import { motion, useMotionValueEvent, useScroll } from 'motion/react';
 import { Link as RouterLink, NavLink, useLocation } from 'react-router';
 import { nav, site } from '../../content/site';
 import { mailto } from '../../lib/mailto';
-import { color, font } from '../../theme/tokens';
+import { color, font, gradient } from '../../theme/tokens';
 import { CloseIcon, MailIcon, MenuIcon } from '../ui/icons';
 import { Logo } from '../ui/Logo';
 import { Wrap } from '../ui/Wrap';
@@ -47,28 +47,20 @@ export function SiteHeader() {
         top: 0,
         zIndex: 1100,
         color: color.ink,
-        bgcolor: alpha(color.paper, 0.88),
-        backdropFilter: 'saturate(1.3) blur(12px)',
+        bgcolor: alpha(color.paper, scrolled ? 0.78 : 0.4),
+        backdropFilter: 'saturate(1.4) blur(14px)',
         borderBottom: '1px solid',
         borderColor: scrolled ? color.line : 'transparent',
-        transition: 'border-color .3s ease',
+        transition: 'border-color .3s ease, background-color .3s ease',
       }}
     >
-      <Wrap
-        sx={{
-          height: HEADER_HEIGHT,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 3,
-        }}
-      >
+      <Wrap sx={{ height: HEADER_HEIGHT, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 3 }}>
         <Box component={RouterLink} to="/" aria-label="Hadasoft home" sx={{ color: 'inherit', textDecoration: 'none' }}>
           <Logo />
         </Box>
 
         <Box component="nav" aria-label="Primary" sx={{ display: { xs: 'none', md: 'block' } }}>
-          <Box component="ul" sx={{ listStyle: 'none', m: 0, p: 0, display: 'flex', gap: { md: 0.25, lg: 1 } }}>
+          <Box component="ul" sx={{ listStyle: 'none', m: 0, p: 0, display: 'flex', gap: { md: 0.25, lg: 0.75 } }}>
             {nav.map((item) => (
               <li key={item.to}>
                 <NavLink to={item.to} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -78,9 +70,7 @@ export function SiteHeader() {
                       sx={{
                         position: 'relative',
                         display: 'inline-flex',
-                        alignItems: 'baseline',
-                        gap: '6px',
-                        px: { md: 1.25, lg: 1.75 },
+                        px: { md: 1.5, lg: 2 },
                         py: 1,
                         fontSize: '0.95rem',
                         fontWeight: isActive ? 600 : 500,
@@ -89,22 +79,12 @@ export function SiteHeader() {
                         '&:hover': { color: color.ink },
                       }}
                     >
-                      <Box component="span" sx={{ fontFamily: font.mono, fontSize: '0.64rem', color: color.ink3 }}>
-                        {item.index}
-                      </Box>
                       {item.label}
                       {isActive && (
                         <motion.span
                           layoutId="nav-active"
                           transition={{ type: 'spring', stiffness: 420, damping: 36 }}
-                          style={{
-                            position: 'absolute',
-                            left: 12,
-                            right: 12,
-                            bottom: 2,
-                            height: 1.5,
-                            background: color.ink,
-                          }}
+                          style={{ position: 'absolute', left: 14, right: 14, bottom: 0, height: 2, borderRadius: 2, background: gradient.iris }}
                         />
                       )}
                     </Box>
@@ -116,13 +96,7 @@ export function SiteHeader() {
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Button
-            href={mailto()}
-            variant="outlined"
-            size="small"
-            startIcon={<MailIcon size={16} />}
-            sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
-          >
+          <Button href={mailto()} variant="outlined" size="small" startIcon={<MailIcon size={16} />} sx={{ display: { xs: 'none', sm: 'inline-flex' } }}>
             Email us
           </Button>
           <IconButton
@@ -137,7 +111,7 @@ export function SiteHeader() {
         </Box>
       </Wrap>
 
-      {/* Reading progress: a hairline that fills as you scroll. */}
+      {/* Reading progress: an iridescent hairline that fills as you scroll. */}
       <motion.div
         aria-hidden="true"
         style={{
@@ -146,7 +120,7 @@ export function SiteHeader() {
           right: 0,
           bottom: -1,
           height: 2,
-          background: color.ink,
+          background: gradient.iris,
           scaleX: scrollYProgress,
           transformOrigin: '0% 50%',
         }}
@@ -159,7 +133,13 @@ export function SiteHeader() {
         onClose={() => setOpen(false)}
         slotProps={{
           paper: {
-            sx: { height: '100dvh', bgcolor: color.paper, color: color.ink, boxShadow: 'none' },
+            sx: {
+              height: '100dvh',
+              bgcolor: color.paper,
+              backgroundImage: 'radial-gradient(80% 50% at 90% 0%, rgba(140,123,255,0.25), transparent 70%), radial-gradient(70% 40% at 0% 100%, rgba(65,240,210,0.14), transparent 70%)',
+              color: color.ink,
+              boxShadow: 'none',
+            },
           },
         }}
       >
@@ -174,7 +154,7 @@ export function SiteHeader() {
         <Wrap sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', pb: 5 }}>
           <Box component="nav" aria-label="Mobile">
             <Box component="ul" sx={{ listStyle: 'none', m: 0, p: 0, mt: 3 }}>
-              {[{ index: '00', label: 'Home', to: '/' }, ...nav].map((item, i) => (
+              {[{ label: 'Home', to: '/' }, ...nav].map((item, i) => (
                 <motion.li
                   key={item.to}
                   initial={{ opacity: 0, y: 14 }}
@@ -187,21 +167,16 @@ export function SiteHeader() {
                     to={item.to}
                     onClick={() => setOpen(false)}
                     sx={{
-                      display: 'flex',
-                      alignItems: 'baseline',
-                      gap: 2,
-                      py: 1.75,
+                      display: 'block',
+                      py: 1.6,
                       color: 'inherit',
                       textDecoration: 'none',
                       fontSize: '2rem',
-                      fontWeight: 540,
+                      fontWeight: 560,
                       fontStretch: '110%',
                       letterSpacing: '-0.03em',
                     }}
                   >
-                    <Box component="span" sx={{ fontFamily: font.mono, fontSize: '0.72rem', color: color.ink3 }}>
-                      {item.index}
-                    </Box>
                     {item.label}
                   </Box>
                 </motion.li>
@@ -209,19 +184,11 @@ export function SiteHeader() {
             </Box>
           </Box>
           <Box sx={{ borderTop: `1px solid ${color.line}`, pt: 3 }}>
-            <Box sx={{ fontFamily: font.mono, fontSize: '0.72rem', letterSpacing: '0.07em', textTransform: 'uppercase', color: color.ink3 }}>
-              Write to us
-            </Box>
-            <Box
-              component="a"
-              href={mailto()}
-              sx={{ display: 'inline-block', mt: 1, fontSize: '1.4rem', fontWeight: 540, color: 'inherit', letterSpacing: '-0.02em' }}
-            >
+            <Box component="a" href={mailto()} sx={{ display: 'inline-block', fontSize: '1.35rem', fontWeight: 560, color: 'inherit', letterSpacing: '-0.02em' }}>
               {site.email}
             </Box>
-            <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: '4px 12px', fontFamily: font.mono, fontSize: '0.72rem', color: color.ink3 }}>
-              <span>PRODUCT SITE</span>
-              <Box component="a" href={site.bizwhatsUrl} target="_blank" rel="noopener noreferrer" sx={{ color: color.ink }}>
+            <Box sx={{ mt: 1.5, fontFamily: font.mono, fontSize: '0.75rem', color: color.ink2 }}>
+              <Box component="a" href={site.bizwhatsUrl} target="_blank" rel="noopener noreferrer" sx={{ color: 'inherit' }}>
                 {site.bizwhatsLabel} ↗
               </Box>
             </Box>

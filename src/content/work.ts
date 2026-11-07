@@ -18,8 +18,7 @@ export const work: WorkItem[] = [
     domain: 'dakshinprojects.in',
     kind: 'Company website',
     sector: 'Civil & technical contracting · Hyderabad',
-    summary:
-      'The company website for Dakshin Projects, a civil and technical contracting firm in Hyderabad that builds for water utilities, banks, NBFCs and private clients. Seven pages, a quote-request flow, and an orbitable 3D site model in the hero.',
+    summary: 'Website for a Hyderabad civil and technical contracting firm. Seven pages, quote requests and a 3D hero.',
     scope: ['7-page website', 'Interactive 3D hero', 'Design & build', 'Live'],
     image: '/work/dakshinprojects.jpg',
   },

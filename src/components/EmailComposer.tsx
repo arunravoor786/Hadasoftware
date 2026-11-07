@@ -81,8 +81,8 @@ export function EmailComposer() {
 
   return (
     <Box>
-      <Typography variant="mono" component="p" sx={{ color: c.fg3 }}>
-        1 — What is it about?
+      <Typography variant="mono" component="p" sx={{ color: c.fg2 }}>
+        Topic
       </Typography>
       <Box role="group" aria-label="Topic" sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
         {TOPICS.map((t) => {
@@ -116,10 +116,10 @@ export function EmailComposer() {
         })}
       </Box>
 
-      <Typography variant="mono" component="p" sx={{ color: c.fg3, mt: 5 }}>
-        2 — Your email, ready to send
+      <Typography variant="mono" component="p" sx={{ color: c.fg2, mt: 5 }}>
+        Your email
       </Typography>
-      <Box sx={{ mt: 2, border: `1px solid ${c.lineStrong}`, bgcolor: c.surface }}>
+      <Box sx={{ mt: 2, borderRadius: '18px', overflow: 'hidden', border: `1px solid ${c.lineStrong}`, bgcolor: c.surface }}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div key={topic.key} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25, ease }}>
             {[

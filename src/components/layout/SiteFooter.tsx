@@ -80,9 +80,8 @@ export function SiteFooter() {
               <Box component={RouterLink} to="/" aria-label="Hadasoft home" sx={{ color: 'inherit', textDecoration: 'none' }}>
                 <Logo />
               </Box>
-              <Typography sx={{ mt: 3, color: color.onNight2, maxWidth: '36ch' }}>
-                A product-engineering company in Magarpatta, Pune. We build our own platforms for customer retention and
-                project risk, and custom software for clients.
+              <Typography sx={{ mt: 3, color: color.onNight2, maxWidth: '30ch' }}>
+                Product engineering from Magarpatta, Pune.
               </Typography>
             </Box>
             <Column

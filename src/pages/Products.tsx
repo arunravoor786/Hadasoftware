@@ -11,6 +11,7 @@ import { SpecTable } from '../components/ui/SpecTable';
 import { StatusPill } from '../components/ui/StatusPill';
 import { site } from '../content/site';
 import { ProductPlate } from '../graphics/ProductPlate';
+import { color } from '../theme/tokens';
 
 export default function Products() {
   return (
@@ -18,8 +19,8 @@ export default function Products() {
       <PageHead
         crumbs={[{ label: 'Home', to: '/' }, { label: 'Products' }]}
         eyebrow="Products"
-        title="Two platforms, built for very different industries."
-        lead="BizWhats is in production today; ACIP is in active development. Explore what they do, who they serve, and the technology behind them."
+        title="Our products."
+        lead="Two platforms. Two industries. One standard."
       />
 
       <Section tone="alt">
@@ -34,28 +35,26 @@ export default function Products() {
       </Section>
 
       <Section>
-        <SectionHead index="01" label="Comparison" title="Different problems, one engineering standard." />
+        <SectionHead label="Compare" title="Side by side." />
         <Reveal>
           <SpecTable
             caption="BizWhats and ACIP compared"
             head={['BizWhats', 'ACIP']}
             rows={[
-              { label: 'Category', cells: ['Customer retention', 'Construction risk intelligence'] },
-              { label: 'Customer', cells: ['SMBs and any repeat-customer business', 'Construction enterprises and insurers'] },
-              { label: 'Core engine', cells: ['Six-stage retention pipeline', 'Live Risk Intelligence Engine (LRIE)'] },
-              { label: 'Frontend', cells: ['Web dashboard and WhatsApp', 'React + TypeScript'] },
-              { label: 'Backend', cells: ['Python · FastAPI', 'Python · FastAPI · LangGraph'] },
-              { label: 'Database', cells: ['Supabase Postgres', 'PostgreSQL'] },
+              { label: 'For', cells: ['Repeat-customer businesses', 'Builders, asset owners, insurers'] },
+              { label: 'Does', cells: ['Customer retention', 'Construction risk intelligence'] },
+              { label: 'Covers', cells: ['Find to retain', 'Planning to maintenance'] },
+              { label: 'Engine', cells: ['Six-stage pipeline', 'LRIE decision engine'] },
               { label: 'Status', cells: [<StatusPill key="b" status="production" />, <StatusPill key="a" status="development" />] },
               {
-                label: 'Product site',
+                label: 'More',
                 cells: [
                   <ArrowLink key="b" href={site.bizwhatsUrl} external>
                     {site.bizwhatsLabel}
                   </ArrowLink>,
-                  <Box key="a" component="span">
-                    On this site: <ArrowLink to="/acip/">ACIP</ArrowLink>
-                  </Box>,
+                  <ArrowLink key="a" to="/acip/">
+                    ACIP
+                  </ArrowLink>,
                 ],
               },
             ]}
@@ -64,15 +63,10 @@ export default function Products() {
       </Section>
 
       <Section tone="alt">
-        <SectionHead
-          index="02"
-          label="BizWhats"
-          title="BizWhats has its own home."
-          lead="The product site covers everything BizWhats in detail. Questions, demos and support go straight to the BizWhats team."
-        >
-          <Box sx={{ mt: { xs: 5, md: 6 }, display: 'grid', gap: 4 }}>
+        <SectionHead label="BizWhats" title="BizWhats has its own home.">
+          <Box sx={{ mt: { xs: 4, md: 5 }, display: 'grid', gap: 4 }}>
             <Box>
-              <Typography variant="mono" component="p" sx={{ mb: 1.5, opacity: 0.7 }}>
+              <Typography variant="mono" component="p" sx={{ mb: 1.5, color: color.ink3 }}>
                 Product site
               </Typography>
               <ArrowLink href={site.bizwhatsUrl} external sx={{ fontSize: 'clamp(1.4rem, 1rem + 1.6vw, 2.2rem)', letterSpacing: '-0.02em' }}>
@@ -80,7 +74,7 @@ export default function Products() {
               </ArrowLink>
             </Box>
             <Box>
-              <Typography variant="mono" component="p" sx={{ mb: 1.5, opacity: 0.7 }}>
+              <Typography variant="mono" component="p" sx={{ mb: 1.5, color: color.ink3 }}>
                 BizWhats team
               </Typography>
               <EmailBlock email={site.supportEmail} subject="BizWhats enquiry" size="md" />
@@ -89,12 +83,7 @@ export default function Products() {
         </SectionHead>
       </Section>
 
-      <CtaSection
-        index="03"
-        title="Not sure which fits your business?"
-        lead="Tell us what you're trying to solve and we'll point you to the right product, or build toward it."
-        subject="Which product fits us?"
-      />
+      <CtaSection label="Next step" title="Not sure which fits?" lead="Tell us the problem. We'll point the way." subject="Which product fits us?" />
     </>
   );
 }

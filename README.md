@@ -55,10 +55,15 @@ npm run deploy -- --clean-legacy   # also removes the old site's .html pages and
 | Motion graphics (all SVG/CSS, no WebGL) | `src/graphics/*.tsx` |
 | Design tokens, theme, typography | `src/theme/` |
 
-## Design system
+## Design system: "Iridescent Midnight"
 
-- **Look:** an engineering drawing on warm paper: hairline rules, grid references, mono annotations.
-- **Colour has meaning:** teal = retention (BizWhats), signal orange = risk (ACIP), ink everywhere else.
+- **Canvas:** deep midnight indigo (an evolution of the original brand navy) with soft nebula glows and film grain.
+- **Colour has meaning:** aqua = retention (BizWhats), coral = risk (ACIP), violet = Hadasoft. The iridescent
+  gradient (aqua → violet → pink → amber) is the signature, used sparingly.
+- **Hero:** a 3D particle sculpture (`src/graphics/ParticleCore.tsx`) on Canvas 2D, not WebGL. It morphs core → Hadasoft
+  mark → BizWhats × ACIP rings, scales its particle count to the device, pauses off-screen and renders one still frame
+  for reduced-motion users.
+- **Writing:** minimal. Short headlines, one-line leads, no numbering.
 - **Type:** Archivo (variable width) for text, IBM Plex Mono for labels. Both are self-hosted, so the site makes no Google Fonts requests.
 - **Motion:** every animation pauses off-screen and respects the visitor's reduced-motion setting. Smooth scrolling is
   skipped on touch devices and for reduced-motion users, so phones keep native scrolling.

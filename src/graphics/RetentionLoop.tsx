@@ -13,10 +13,10 @@ import { useToneColors } from '../theme/tone';
 import { ease, font } from '../theme/tokens';
 
 const STEPS = [
-  { name: 'Find', body: 'Discovers and scores high-intent leads from public sources, ready for outreach.' },
-  { name: 'Reach', body: "Sends personalised WhatsApp messages in the customer's native language." },
-  { name: 'Convert', body: 'Manages the reply thread and moves prospects from trial to paid via Razorpay.' },
-  { name: 'Retain', body: 'Keeps customers engaged with timely, automated re-engagement and check-ins.' },
+  { name: 'Find', body: 'Finds and scores high-intent leads.' },
+  { name: 'Reach', body: 'Messages them in their own language.' },
+  { name: 'Convert', body: 'Turns trials into paid, via Razorpay.' },
+  { name: 'Retain', body: 'Re-engages before they drift away.' },
 ];
 
 const C = 160;
@@ -150,21 +150,18 @@ export function RetentionLoop() {
                   cursor: 'pointer',
                   width: '100%',
                   display: 'grid',
-                  gridTemplateColumns: '3ch 8rem minmax(0, 1fr)',
+                  gridTemplateColumns: '8rem minmax(0, 1fr)',
                   alignItems: 'baseline',
                   gap: 2,
                   py: 2.25,
-                  pl: 2,
+                  pl: 2.5,
                   borderLeft: `2px solid ${on ? c.teal : 'transparent'}`,
                   transition: 'border-color .3s, background-color .3s',
-                  bgcolor: on ? (c.night ? 'rgba(255,255,255,0.03)' : 'rgba(17,20,24,0.03)') : 'transparent',
+                  bgcolor: on ? 'rgba(65,240,210,0.06)' : 'transparent',
                   '&:focus-visible': { outline: `2px solid ${c.teal}`, outlineOffset: '-2px' },
-                  '@media (max-width: 599.95px)': { gridTemplateColumns: '3ch minmax(0, 1fr)', '& .step-body': { gridColumn: '2' } },
+                  '@media (max-width: 599.95px)': { gridTemplateColumns: '1fr', gap: 0.5 },
                 }}
               >
-                <Typography variant="mono" sx={{ color: on ? c.teal : c.fg3 }}>
-                  {String(i + 1).padStart(2, '0')}
-                </Typography>
                 <Typography variant="h4" component="span" sx={{ color: on ? c.fg : c.fg2 }}>
                   {s.name}
                 </Typography>

@@ -56,7 +56,17 @@ export function RiskFusion() {
       ref={ref}
       role="img"
       aria-label="Illustration of risk fusion. A missing hard hat on its own is rated HIGH by a simple rule. Combined with working on the 12th floor, 20 mph wind, the trade's third violation this week and a crane pick in 30 minutes, LRIE scores the situation 0.94, CRITICAL, and escalates with specific mitigation steps."
-      sx={{ border: `1px solid ${c.lineStrong}`, bgcolor: c.surface, fontFamily: font.mono, fontSize: '0.8rem', maxWidth: 540, mx: { lg: 'auto' } }}
+      sx={{
+        borderRadius: '22px',
+        overflow: 'hidden',
+        border: '1px solid rgba(255,122,89,0.38)',
+        bgcolor: c.surface,
+        boxShadow: '0 50px 110px -50px rgba(255,122,89,0.6)',
+        fontFamily: font.mono,
+        fontSize: '0.8rem',
+        maxWidth: 540,
+        mx: { lg: 'auto' },
+      }}
     >
       <Box
         sx={{

@@ -2,9 +2,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { products, site, type Product } from '../content/site';
 import { ArrowLink } from '../components/ui/ArrowLink';
+import { GlowCard } from '../components/ui/GlowCard';
 import { StatusPill } from '../components/ui/StatusPill';
-import { ToneContext, toneColors, type Tone } from '../theme/tone';
-import { font } from '../theme/tokens';
+import { ToneContext } from '../theme/tone';
+import { color, font } from '../theme/tokens';
 import { LanguageCycler } from './LanguageCycler';
 import { SiteVision } from './SiteVision';
 
@@ -13,83 +14,66 @@ interface ProductPlateProps {
   detailed?: boolean;
 }
 
-/** A product as a plate: BizWhats on warm paper, ACIP on night. */
+/** A product as a glowing glass card: aqua for BizWhats, coral for ACIP. */
 export function ProductPlate({ productKey, detailed = false }: ProductPlateProps) {
   const p = products[productKey];
-  const tone: Tone = productKey === 'acip' ? 'night' : 'paper';
-  const c = toneColors(tone);
-  const plateBg = productKey === 'acip' ? c.bg : c.surface;
+  const isAcip = productKey === 'acip';
+  const accent = isAcip ? color.orange : color.teal;
   const features = detailed ? p.features : p.features.slice(0, 4);
 
   return (
-    <ToneContext value={tone}>
-      <Box
-        component="article"
-        aria-labelledby={`plate-${p.key}`}
-        sx={{ bgcolor: plateBg, color: c.fg, border: `1px solid ${c.lineStrong}`, display: 'flex', flexDirection: 'column', height: '100%' }}
-      >
-        <Box sx={{ p: { xs: 3, md: 4 }, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 2 }}>
-          <Box>
-            <Typography variant="mono" component="p" sx={{ color: c.fg3 }}>
-              {p.category}
-            </Typography>
-            <Typography
-              id={`plate-${p.key}`}
-              variant="h3"
-              component="h3"
-              sx={{ mt: 1, fontSize: 'clamp(2rem, 1.4rem + 1.6vw, 2.7rem)', letterSpacing: '-0.03em' }}
-            >
-              {p.name}
-            </Typography>
-          </Box>
-          <StatusPill status={p.status} />
-        </Box>
-
-        <Box sx={{ borderTop: `1px solid ${c.line}`, borderBottom: `1px solid ${c.line}`, px: { xs: 3, md: 4 }, py: 3, minHeight: 230, display: 'flex', alignItems: 'center' }}>
-          {productKey === 'acip' ? (
-            <Box sx={{ width: '100%' }}>
-              <SiteVision />
-            </Box>
-          ) : (
-            <Box sx={{ width: '100%' }}>
-              <Typography variant="mono" component="p" sx={{ color: c.fg3, mb: 1 }}>
-                Reach · in the customer's own language
+    <ToneContext value={isAcip ? 'night' : 'paper'}>
+      <GlowCard accent={isAcip ? 'coral' : 'aqua'} bg={isAcip ? color.night2 : color.card} radius={24} component="article" labelledBy={`plate-${p.key}`}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <Box sx={{ p: { xs: 3, md: 4 }, pb: { xs: 1, md: 1 }, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 2 }}>
+            <Box>
+              <Typography variant="mono" component="p" sx={{ color: accent }}>
+                {p.category}
               </Typography>
-              <LanguageCycler size="sm" />
+              <Typography id={`plate-${p.key}`} variant="h3" component="h3" sx={{ mt: 1, fontSize: 'clamp(2rem, 1.4rem + 1.6vw, 2.8rem)', letterSpacing: '-0.035em' }}>
+                {p.name}
+              </Typography>
             </Box>
-          )}
-        </Box>
+            <StatusPill status={p.status} />
+          </Box>
 
-        <Box sx={{ p: { xs: 3, md: 4 }, flex: 1 }}>
-          <Typography sx={{ color: c.fg2 }}>{p.summary}</Typography>
-          <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, mt: 3 }}>
-            {features.map((f, i) => (
-              <Box
-                component="li"
-                key={f}
-                sx={{ display: 'grid', gridTemplateColumns: '3ch minmax(0, 1fr)', gap: 1.5, py: 1.25, borderTop: `1px solid ${c.line}`, fontSize: '0.95rem' }}
-              >
-                <Box component="span" sx={{ fontFamily: font.mono, fontSize: '0.7rem', color: c.fg3, pt: '3px' }}>
-                  {String(i + 1).padStart(2, '0')}
-                </Box>
-                {f}
+          <Box sx={{ px: { xs: 3, md: 4 }, py: 2, minHeight: 230, display: 'flex', alignItems: 'center' }}>
+            {isAcip ? (
+              <Box sx={{ width: '100%' }}>
+                <SiteVision />
               </Box>
-            ))}
+            ) : (
+              <Box sx={{ width: '100%' }}>
+                <LanguageCycler size="sm" />
+              </Box>
+            )}
           </Box>
-          <Box sx={{ mt: 3, fontFamily: font.mono, fontSize: '0.72rem', lineHeight: 1.7, color: c.fg3 }}>
-            STACK — {p.stack.join(' / ')}
-          </Box>
-        </Box>
 
-        <Box sx={{ px: { xs: 3, md: 4 }, pb: { xs: 3, md: 4 }, display: 'flex', flexWrap: 'wrap', gap: 3 }}>
-          <ArrowLink to={p.to}>{productKey === 'acip' ? 'Explore ACIP' : 'Explore BizWhats'}</ArrowLink>
-          {productKey === 'bizwhats' && (
-            <ArrowLink href={site.bizwhatsUrl} external>
-              bizwhats.in
-            </ArrowLink>
-          )}
+          <Box sx={{ px: { xs: 3, md: 4 }, pb: 3, flex: 1 }}>
+            <Typography sx={{ color: color.ink, fontSize: '1.1rem', fontWeight: 500 }}>{p.summary}</Typography>
+            <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, mt: 2.5, display: 'grid', gap: 1.25 }}>
+              {features.map((f) => (
+                <Box component="li" key={f} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, color: color.ink2, fontSize: '0.98rem' }}>
+                  <Box component="span" aria-hidden="true" sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: accent, boxShadow: `0 0 10px ${accent}`, flexShrink: 0 }} />
+                  {f}
+                </Box>
+              ))}
+            </Box>
+            {detailed && (
+              <Box sx={{ mt: 3, fontFamily: font.mono, fontSize: '0.72rem', lineHeight: 1.7, color: color.ink3 }}>{p.stack.join(' · ')}</Box>
+            )}
+          </Box>
+
+          <Box sx={{ px: { xs: 3, md: 4 }, pb: { xs: 3, md: 4 }, display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+            <ArrowLink to={p.to}>{isAcip ? 'Explore ACIP' : 'Explore BizWhats'}</ArrowLink>
+            {!isAcip && (
+              <ArrowLink href={site.bizwhatsUrl} external>
+                {site.bizwhatsLabel}
+              </ArrowLink>
+            )}
+          </Box>
         </Box>
-      </Box>
+      </GlowCard>
     </ToneContext>
   );
 }

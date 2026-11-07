@@ -3,7 +3,7 @@ import { animate, useInView, useReducedMotion } from 'motion/react';
 import { ease } from '../../theme/tokens';
 
 /** Counts up to `to` once, when first visible. */
-export function CountUp({ to, pad = 2, suffix = '' }: { to: number; pad?: number; suffix?: string }) {
+export function CountUp({ to, pad = 0, suffix = '' }: { to: number; pad?: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
   const reduce = useReducedMotion();
