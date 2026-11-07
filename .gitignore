@@ -1,0 +1,36 @@
+# dependencies & build output
+node_modules
+dist
+dist-ssr
+*.local
+
+# deploy credentials and artefacts (never commit these)
+.env
+.env.*
+!.env.example
+backups/
+release/
+*.zip
+
+# local verification output
+screenshots/
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+screenshots-prod/
