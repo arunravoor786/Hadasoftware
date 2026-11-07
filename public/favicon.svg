@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .bg { fill: #F3F1EA; }
+    .f { fill: #111418; }
+    .s { fill: none; stroke: #111418; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #111418; }
+      .f { fill: #F3F1EA; }
+      .s { stroke: #F3F1EA; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32" rx="6" />
+  <g transform="translate(2 2)">
+    <rect class="f" x="3.5" y="3" width="4.6" height="22" rx="1" />
+    <rect class="f" x="19.9" y="3" width="4.6" height="22" rx="1" />
+    <path class="s" d="M8.1 14h2.5M17.4 14h2.5" stroke-width="2.4" />
+    <circle class="s" cx="14" cy="14" r="3.3" stroke-width="2.4" />
+  </g>
+</svg>
