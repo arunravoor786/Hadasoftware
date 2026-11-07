@@ -193,7 +193,7 @@ function Hero() {
               }}
             >
               <Box component="span" sx={{ width: 7, height: 7, borderRadius: '50%', background: gradient.iris, boxShadow: '0 0 10px rgba(140,123,255,0.9)' }} />
-              Product engineering · Pune
+              Product engineering · Hyderabad
             </Box>
           </Reveal>
           <Headline />

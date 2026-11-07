@@ -96,7 +96,7 @@ export default function Company() {
         crumbs={[{ label: 'Home', to: '/' }, { label: 'Company' }]}
         eyebrow="Company"
         title="A small team that ships."
-        lead="Hadasoftware Private Limited. Product engineering from Magarpatta, Pune."
+        lead="Hadasoftware Private Limited. Product engineering from Hyderabad."
       />
 
       <Section tone="alt">

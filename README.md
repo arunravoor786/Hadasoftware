@@ -1,6 +1,7 @@
 # hadasoft.in
 
-The website of **Hadasoftware Private Limited** (Hadasoft), Magarpatta, Pune.
+The website of **Hadasoftware Private Limited** (Hadasoft), #1-7-1072/1, Pattabi Towers, RTC X Road,
+Opp. Tapadia Diagnostic Center, Hyderabad – 500 020, Telangana, India.
 React 19 · MUI 9 · Motion 14 · React Router 8 · Lenis · Vite 8 · TypeScript, built as a static site for Hostinger.
 
 Contact on the site is **email only**: `contactus@hadasoft.in` for the company and `support@bizwhats.in` for BizWhats.

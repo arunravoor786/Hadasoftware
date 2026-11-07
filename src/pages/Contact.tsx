@@ -14,7 +14,16 @@ import { color, font } from '../theme/tokens';
 function Details() {
   const rows: Array<[string, ReactNode]> = [
     ['Company', site.legalName],
-    ['Office', site.locationShort],
+    [
+      'Office',
+      <Box component="address" key="office" sx={{ fontStyle: 'normal' }}>
+        {site.addressLines.map((line) => (
+          <Box component="span" key={line} sx={{ display: 'block' }}>
+            {line}
+          </Box>
+        ))}
+      </Box>,
+    ],
     ['Hours', site.hours],
     ['Reply', site.response],
     ['Languages', site.languages.join(' · ')],

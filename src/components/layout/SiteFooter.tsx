@@ -81,8 +81,18 @@ export function SiteFooter() {
                 <Logo />
               </Box>
               <Typography sx={{ mt: 3, color: color.onNight2, maxWidth: '30ch' }}>
-                Product engineering from Magarpatta, Pune.
+                Product engineering from Hyderabad.
               </Typography>
+              <Box
+                component="address"
+                sx={{ mt: 2.5, fontStyle: 'normal', fontFamily: font.mono, fontSize: '0.72rem', lineHeight: 1.7, color: color.onNight3 }}
+              >
+                {site.addressLines.map((line) => (
+                  <Box component="span" key={line} sx={{ display: 'block' }}>
+                    {line}
+                  </Box>
+                ))}
+              </Box>
             </Box>
             <Column
               title="Products"
