@@ -31,7 +31,7 @@ const PEOPLE: Person[] = [
     initials: 'AR',
     name: 'ArunKumar RM',
     role: 'Founder & CTO',
-    bio: "Architect of BizWhats and ACIP, from data model to deployment. Shaped by his brother Kalyan Pemmasani's leadership and his father Muthaiyan R's work ethic.",
+    bio: 'Architect of BizWhats and ACIP, from data model to deployment. Building AI products that put Indian businesses and construction teams a step ahead.',
     tags: ['AI engineering', 'Architecture', 'Product'],
     accent: 'violet',
   },
